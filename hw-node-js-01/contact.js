@@ -1,4 +1,4 @@
-// const nanoid = require("nanoid");
+const nanoid = require("nanoid");
 const fs = require("fs").promises;
 const path = require("path");
 
@@ -16,7 +16,7 @@ async function readFile() {
 
 async function listContacts() {
   const json = await readFile();
-  return console.table(json);
+  return json;
 }
 
 async function getListContacts() {
@@ -27,7 +27,6 @@ async function getListContacts() {
 async function getContactById(contactId) {
   const contacts = await getListContacts();
   const user = contacts.find((contact) => contact.id === contactId) || null;
-  console.log(user);
   return user;
 }
 
@@ -43,7 +42,6 @@ async function removeContact(contactId) {
 
   try {
     await fs.writeFile(contactsPath, JSON.stringify(newarrcontact, null, 2));
-    console.log(elbyId);
     return elbyId;
   } catch (error) {
     console.error("Error writing  file:", error.message);
@@ -54,7 +52,7 @@ async function removeContact(contactId) {
 async function addContact(name, email, phone) {
   // ...твій код. Повертає об'єкт доданого контакту.
   const newObj = {
-    // id: nanoid(),
+    id: nanoid.nanoid(),
     name: name,
     email: email,
     phone: phone,
@@ -65,7 +63,6 @@ async function addContact(name, email, phone) {
 
   try {
     await fs.writeFile(contactsPath, JSON.stringify(updatedContacts, null, 2));
-    console.log(newObj);
     return newObj;
   } catch (error) {
     console.error("Error writing  file:", error.message);
